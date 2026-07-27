@@ -2,12 +2,12 @@ import fs from "fs";
 import { nanoid } from "nanoid";
 import { input } from "@inquirer/prompts";
 
-// the path to store the website address and it's id.
-let FILE_PATH = "./url.json";
+// the path that store the website address and it's id.
+let FILE_PATH = "./URL/url.json";
 
 Process();
 
-// Take the user prompt and encrypt then store the link in "FILE_PATH".
+// Take the user prompt and call another function.
 async function Process() {
   let userLink = await input({
     message: "Enter the url: ",
