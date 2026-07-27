@@ -52,6 +52,12 @@ npm install inquirer nanoid
 node src/index.js
 '''
 
+## Demo
+
+Here is the output of the URL Shortener in action:
+
+<video src="./Output/Output_01.mp4" controls="controls" width="600" title="URL Shortener CLI Demo 1"></video>
+
 ### 📄 License
 
 This project is licensed under the [MIT](https://opensource.org/license/mit) License.
