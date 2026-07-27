@@ -1,2 +1,57 @@
-# URL_Shortner_API
- Accept a long URL and return a short, unique code. Redirect users who visit the short code.
+# URL Shortener API
+
+A CLI-based URL shortener prototype inspired by Bitly. It takes a long URL from the user, generates a short, secure identifier, and saves the mapping locally to your machine.
+
+## Tech Stack
+
+- **Runtime:** Node.js
+- **Dependencies:**
+  - `inquirer`: For interactive command-line prompts.
+  - `nanoid`: For generating short, secure, and unique IDs.
+
+## 📂 Folder Structure
+
+```text
+RootFolder/
+└── node_module
+├── src/
+│   ├── index.html
+│   └── index.js
+├── URL/
+│   └── url.json
+└── jsconfig.json
+└── LICENSE
+├── package-lock.json
+└── package.json
+└── README.md
+```
+
+## How It Works
+
+1. Prompts the user to input a destination URL.
+
+2. Generates a unique short ID using nanoid.
+
+3. Maps the provided URL to the newly generated ID.
+
+4. Stores the mapping persistently in a local url.json file.
+
+## Getting Started
+
+To run this prototype locally, ensure you have Node.js installed, then install the required packages and run the application:
+
+# Install required dependencies
+
+'''
+npm install inquirer nanoid
+'''
+
+# Run the application
+
+'''
+node src/index.js
+'''
+
+### 📄 License
+
+This project is licensed under the [MIT](https://opensource.org/license/mit) License.
