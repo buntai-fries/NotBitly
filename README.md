@@ -56,7 +56,7 @@ node src/index.js
 
 Here is the output of the URL Shortener in action:
 
-<video src="https://github.com/buntai-fries/URL_Shortner_API/tree/main/Output/Output.mp4" controls="controls" width="600" title="URL Shortener CLI Demo 1"></video>
+![URL Shortener CLI Demo 1](./Output/Output_01.gif)
 
 ## 📄 License
 
