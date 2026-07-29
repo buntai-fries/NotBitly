@@ -40,24 +40,24 @@ RootFolder/
 
 To run this prototype locally, ensure you have Node.js installed, then install the required packages and run the application:
 
-# Install required dependencies
+### Install required dependencies
 
-'''
+```text
 npm install inquirer nanoid
-'''
+```
 
-# Run the application
+### Run the application
 
-'''
+```text
 node src/index.js
-'''
+```
 
 ## Demo
 
 Here is the output of the URL Shortener in action:
 
-<video src="./Output/Output_01.mp4" controls="controls" width="600" title="URL Shortener CLI Demo 1"></video>
+<video src="https://github.com/buntai-fries/URL_Shortner_API/tree/main/Output/Output.mp4" controls="controls" width="600" title="URL Shortener CLI Demo 1"></video>
 
-### 📄 License
+## 📄 License
 
 This project is licensed under the [MIT](https://opensource.org/license/mit) License.
