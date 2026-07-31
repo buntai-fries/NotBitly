@@ -4,6 +4,7 @@
   "type": "module",
   "main": "src/index.js",
   "dependencies": {
+    "express": "^5.2.1",
     "inquirer": "^14.0.2",
     "nanoid": "^6.0.0"
   }
