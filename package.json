@@ -1,8 +1,7 @@
 {
   "name": "URL_Shortner_API",
   "version": "1.0.0",
-  "type": "module",
-  "main": "src/index.js",
+  "main": "public/index.js",
   "dependencies": {
     "express": "^5.2.1",
     "inquirer": "^14.0.2",
