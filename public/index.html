@@ -8,9 +8,11 @@
 </head>
 
 <body>
+  <h2>NotBitly</h2>
+  <p>Please provide the link of the website that you want to shortned securely.</p>
   <form method="POST" action="/submit">
     <label for="link">Link of the Website</label>
-    <input type="input" id="link" name="link" required>
+    <input type="url" id="link" name="link" placeholder="https://xyz.com" required>
     <input type="submit" value="Submit">
   </form>
 </body>
