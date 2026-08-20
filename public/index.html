@@ -2,22 +2,17 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>Not Bitly.</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NotBitly</title>
 </head>
 
 <body>
-  <h1>URL Shortener</h1>
-
-  <form id="shorten-form">
-    <label for="url">Enter URL to shorten:</label>
-    <input type="url" id="url" name="url" required />
-    <button type="submit">Shorten</button>
+  <form method="POST" action="/submit">
+    <label for="link">Link of the Website</label>
+    <input type="input" id="link" name="link" required>
+    <input type="submit" value="Submit">
   </form>
-
-  <p id="result"></p>
-
-  <script src="script.js"></script>
 </body>
 
 </html>

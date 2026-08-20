@@ -1,10 +1,13 @@
 {
   "name": "URL_Shortner_API",
   "version": "1.0.0",
+  "type": "module",
   "main": "public/index.js",
   "dependencies": {
+    "body-parser": "^2.3.0",
     "express": "^5.2.1",
     "inquirer": "^14.0.2",
-    "nanoid": "^6.0.0"
+    "nanoid": "^6.0.0",
+    "nodemon": "^3.1.14"
   }
 }
