@@ -2,15 +2,13 @@ import fs from "fs";
 import express from "express";
 import bodyParser from "body-parser";
 import { nanoid } from "nanoid";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
 
 const app = express();
-const port = 5000;
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const __urlPath = "./URL/url.json";
+const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static("public"));
+const __urlPath = "./URL/url.json";
 
 function generateID() {
   return nanoid(8);
@@ -26,12 +24,20 @@ function userInput(longURL) {
 }
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
+  res.render("index.ejs");
+});
+
+app.get("/about", (req, res) => {
+  res.render("about.ejs");
+});
+
+app.get("/converter", (req, res) => {
+  res.render("converter.ejs");
 });
 
 app.post("/submit", (req, res) => {
   userInput(req.body["link"]);
-  res.sendFile(__dirname + "/public/submit.html");
+  res.render("submit.ejs");
 });
 
 app.listen(port, () => {
