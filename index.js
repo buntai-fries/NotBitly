@@ -1,4 +1,5 @@
 import fs from "fs";
+import "ejs";
 import express from "express";
 import bodyParser from "body-parser";
 import { nanoid } from "nanoid";
