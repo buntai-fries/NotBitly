@@ -1,6 +1,6 @@
 import fs from "fs";
 import express from "express";
-import bodyParser from "body-parser";
+import "dotenv/config";
 import { nanoid } from "nanoid";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -8,25 +8,28 @@ import { Redis } from "@upstash/redis";
 import console from "console";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.set("trust proxy", 1);
 app.use(express.static("public"));
 app.use(express.json());
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const urlDatabase = {};
+
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
 async function generateID(longUrl) {
-  const shortID = nanoid(8);
-  const saved = await redis.set(shortID, longUrl, { nx: true });
-  if (saved) {
-    return shortID;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const shortID = nanoid(8);
+    const saved = await redis.set(shortID, longUrl, { nx: true });
+    if (saved) {
+      return shortID;
+    }
   }
+  throw new Error("Failed to generate a unique ID");
 }
 
 app.get("/", (req, res) => {
