@@ -34,7 +34,7 @@ app.get("/converter", (req, res) => {
 app.post("/api/conversion", (req, res) => {
   const longUrl = req.body.originalUrl;
   const shortID = generateID();
-  const shortLink = "http://localhost:3000/" + shortID;
+  const shortLink = "https://url-shortner-api-theta.vercel.app/" + shortID;
   urlDatabase[shortID] = longUrl;
   res.json({
     message: "Conversion Completed.",
