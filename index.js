@@ -21,8 +21,12 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-function generateID() {
-  return nanoid(8);
+async function generateID(longUrl) {
+  const shortID = nanoid(8);
+  const saved = await redis.set(shortID, longUrl, { nx: true });
+  if (saved) {
+    return shortID;
+  }
 }
 
 app.get("/", (req, res) => {
@@ -37,16 +41,20 @@ app.get("/converter", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "converter.html"));
 });
 
-app.post("/api/conversion", (req, res) => {
-  const longUrl = req.body.originalUrl;
-  const shortID = generateID();
-  const shortLink = "https://url-shortner-api-theta.vercel.app/" + shortID;
-  urlDatabase[shortID] = longUrl;
-  res.json({
-    message: "Conversion Completed.",
-    shortLink: shortLink,
-    original: longUrl,
-  });
+app.post("/api/conversion", async (req, res) => {
+  try {
+    const longUrl = req.body?.originalUrl;
+    const shortID = await generateID(longUrl);
+    const baseUrl =
+      process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
+    res.json({
+      message: "Conversion Completed.",
+      shortLink: `${baseUrl}/${shortID}`,
+      original: longUrl,
+    });
+  } catch (error) {
+    res.status(500).send("500 Internal Server Error.");
+  }
 });
 
 app.get("/:shortID", async (req, res) => {
