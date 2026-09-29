@@ -56,7 +56,7 @@ node src/index.js
 
 Here is the output of the URL Shortener in action:
 
-![URL Shortener CLI Demo 1](./Output/Output_01.gif)
+![URL Shortener CLI Demo 1](./Output/Output.gif)
 
 ## 📄 License
 
