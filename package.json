@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
+    "@upstash/redis": "^1.39.0",
     "body-parser": "^2.3.0",
     "express": "^5.2.1",
     "nanoid": "^6.0.0",
