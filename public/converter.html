@@ -11,12 +11,40 @@
 <body>
 
   <h2>NotBitly</h2>
+
   <p>Please provide the link of the website that you want to shortned securely.</p>
-  <form method="POST" action="/submit">
+
+  <form id="urlForm">
     <label for="link">Website's Link</label>
     <input type="url" id="link" name="link" placeholder="https://xyz.com" required>
     <input type="submit" value="Submit">
   </form>
+
+  <div id="resultArea" style="margin-top: 20px;"></div>
+
+  <script>
+    document.getElementById("urlForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const userUrl = document.getElementById("link").value;
+      fetch("/api/conversion", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ originalUrl: userUrl })
+      })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("resultArea").innerHTML = `
+          <h3>The short and sweet link:</h3>
+          <p>
+            ${data.message} <br>
+            The short-generated link is: <strong>${data.shortLink}</strong>
+          </p>
+          <p>This redirects to: ${data.original}</p>
+          `;
+        })
+        .catch(error => (console.error(`Error fetching the data: `, error)));
+    })
+  </script>
 
 </body>
 
