@@ -4,6 +4,8 @@ import bodyParser from "body-parser";
 import { nanoid } from "nanoid";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
+import { Redis } from "@upstash/redis";
+import console from "console";
 
 const app = express();
 const port = 3000;
@@ -14,6 +16,10 @@ app.use(express.json());
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const urlDatabase = {};
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
 
 function generateID() {
   return nanoid(8);
@@ -43,13 +49,15 @@ app.post("/api/conversion", (req, res) => {
   });
 });
 
-app.get("/:shortID", (req, res) => {
-  const shortId = req.params.shortID;
-  const originalLink = urlDatabase[shortId];
-  if (originalLink) {
-    res.redirect(originalLink);
-  } else {
+app.get("/:shortID", async (req, res) => {
+  try {
+    const originalLink = await redis.get(req.params.shortID);
+    if (originalLink) {
+      return res.redirect(originalLink);
+    }
     res.status(404).send("Error, the link was broken!");
+  } catch (error) {
+    res.status(500).send("An HTTP 500 Internal Server Error");
   }
 });
 
