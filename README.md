@@ -139,15 +139,6 @@ Redirects to the original URL.
 - **No duplicate handling or collision check.** The same URL gets a new ID each time, and generated IDs are not checked against existing ones (collisions are extremely unlikely at this scale with `nanoid(8)`, but not impossible).
 - **Result rendered with `innerHTML`.** The converter page inserts server data into the page as HTML rather than as text.
 
-## Roadmap
-
-- [ ] Persistent storage (database or key-value store) so links survive restarts
-- [ ] Build the short link from the request host or an environment variable
-- [ ] Validate and normalize URLs on the server, allowing only `http` and `https`
-- [ ] Return proper error responses (`400`) for bad input
-- [ ] Click counting per short link
-- [ ] Copy-to-clipboard button on the result
-
 ## License
 
 MIT. See [LICENSE](LICENSE).
