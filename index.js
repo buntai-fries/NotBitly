@@ -83,4 +83,8 @@ app.get("/:shortID", async (req, res) => {
   } catch (error) {
     res.status(500).send("Internal Server Error.");
   }
-};
+});
+
+app.listen(port, () => {
+  console.log(`The server ${port} is running!`);
+});
