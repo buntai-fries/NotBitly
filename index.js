@@ -4,6 +4,9 @@ import { nanoid } from "nanoid";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import { Redis } from "@upstash/redis";
+import session from "express-session";
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -11,6 +14,64 @@ const port = process.env.PORT || 3000;
 app.set("trust proxy", 2);
 app.use(express.static("public"));
 app.use(express.json());
+
+app.use(
+  session({
+    secret: process.env.GOOGLE_CLIENT_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:3000/auth/google/callback",
+    },
+    function (accessToken, refreshToken, profile, done) {
+      return done(null, profile);
+    },
+  ),
+);
+
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((user, done) => done(null, user));
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/auth/google");
+}
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] }),
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/" }),
+  (req, res) => {
+    res.redirect("/dashboard");
+  },
+);
+
+app.get("/dashboard", ensureAuthenticated, (req, res) => {
+  res.redirect("/");
+});
+
+app.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+});
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
